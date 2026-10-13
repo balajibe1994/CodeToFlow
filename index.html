@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Code to Flowchart Generator</title>
+
+  <!-- Mermaid -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.3/dist/mermaid.min.js"></script>
+  <!-- html2canvas for image export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <!-- jsPDF for PDF export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+	<script type="module">
+	  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.3/dist/mermaid.esm.min.mjs';
+	  window.mermaid = mermaid;
+	  mermaid.initialize({ startOnLoad: false });
+	</script>
+  <!-- CodeMirror -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/dracula.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/clike/clike.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/python/python.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Overlay & Loader -->
+  <div id="overlay" class="overlay" style="display: none;"></div>
+  <div id="loader" class="loader" style="display: none;">
+    <img src="https://i.gifer.com/ZZ5H.gif" alt="Loading..." width="60" />
+    <p style="color: black;">Generating, please wait...</p>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>Code to FlowChart</h1>
+    <h3>Created by Balaji Krishnan</h3>
+  </div>
+
+  <!-- Content -->
+  <div class="container">
+    <div class="left">
+      <div class="code-header">
+        <h3>Enter C#.NET or Java Code</h3>
+        <select id="languageSelect" class="language-dropdown" onchange="onLanguageChange()">
+          <option value="csharp">C#.NET</option>
+          <option value="java">Java</option>
+          <option value="python">Python</option>
+          <option value="javascript">JavaScript</option>
+          <option value="plaintext">Plain Text</option>
+        </select>
+      </div>
+
+      <textarea id="codeInput">// Paste your code here...</textarea>
+	<div class="controls">
+	  <button onclick="generateFlowchart()">Generate Flowchart</button>
+	  <label for="wrapInput" style="margin-left: 10px;">Wrap Length:</label>
+	  <input type="number" id="wrapInput" min="10" max="200" value="60" style="width: 60px;" />
+	  <select id="exportFormat" class="export-dropdown">
+		<option value="svg" selected>SVG</option>
+		<option value="png">PNG</option>
+		<option value="pdf">PDF</option>
+	  </select>
+
+	  <button id="exportBtn" onclick="exportFlowchart()" disabled>Export</button>
+	</div>
+    </div>
+
+    <div class="right">
+      <h3>Flowchart Output</h3>
+      <div id="flowchart" class="mermaid"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
